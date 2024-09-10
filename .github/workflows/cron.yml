@@ -16,7 +16,7 @@ jobs:
       - name: Set Fixed Cron Minute
         run: |
           # Define the fixed minute value
-          FIXED_MINUTE=45
+          FIXED_MINUTE=33
           
           # Print the fixed minute value to the console
           echo "Fixed Minute: $FIXED_MINUTE"
