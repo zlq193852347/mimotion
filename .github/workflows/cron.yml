@@ -12,12 +12,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          token: ${{ secrets.PAT }} #此处PAT需要申请，教程详见：https://www.jianshu.com/p/bb82b3ad1d11,需要repo和workflow权限
-      - name: random cron
+          token: ${{ secrets.PAT }} # 此处PAT需要申请，教程详见：https://www.jianshu.com/p/bb82b3ad1d11,需要repo和workflow权限
+      - name: Set Fixed Cron Minute
         run: |
-          sed -i -E "s/(- cron: ')[0-9]+( [^[:space:]]+ \* \* \*')/\1$(($RANDOM % 59))\2/g" .github/workflows/run.yml
+          # Define the fixed minute value
+          FIXED_MINUTE=45
+          
+          # Print the fixed minute value to the console
+          echo "Fixed Minute: $FIXED_MINUTE"
+          
+          # Update the cron expression in the YAML file with the fixed minute
+          sed -i -E "s/(- cron: ')[0-9]+( [^[:space:]]+ \* \* \*')/\1$FIXED_MINUTE\2/g" .github/workflows/run.yml
+          
+          # Configure Git
           git config user.name github-actions
           git config user.email github-actions@github.com
+          
+          # Commit and push the changes
           git add .
-          git commit -m "random cron"
+          git commit -m "Set fixed cron minute to $FIXED_MINUTE"
           git push origin master
